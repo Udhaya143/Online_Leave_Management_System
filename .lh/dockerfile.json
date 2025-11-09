@@ -1,0 +1,18 @@
+{
+    "sourceFile": "dockerfile",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1762711535468,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1762711535468,
+            "name": "Commit-0",
+            "content": "# Use official PHP Apache image as base\r\nFROM php:8.0-apache\r\n\r\n# Install system dependencies\r\nRUN apt-get update && apt-get install -y \\\r\n    libpng-dev \\\r\n    libonig-dev \\\r\n    libxml2-dev \\\r\n    zip \\\r\n    curl \\\r\n    unzip \\\r\n    git\r\n\r\n# Install PHP extensions\r\nRUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd mysqli\r\n\r\n# Enable Apache modules\r\nRUN a2enmod rewrite\r\n\r\n# Set working directory\r\nWORKDIR /var/www/html\r\n\r\n# Copy application files\r\nCOPY . /var/www/html/\r\n\r\n# Set permissions\r\nRUN chown -R www-data:www-data /var/www/html \\\r\n    && chmod -R 755 /var/www/html\r\n\r\n# Expose port 80\r\nEXPOSE 80\r\n\r\n# Start Apache service\r\nCMD [\"apache2-foreground\"]\r\n\r\n# Note: Credentials for reference (Do not store in Dockerfile in production)\r\n# Admin: username - admin, password - admin123\r\n# Employee: username - employee@example.com, password - employee123"
+        }
+    ]
+}

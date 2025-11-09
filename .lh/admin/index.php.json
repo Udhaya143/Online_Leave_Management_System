@@ -1,0 +1,18 @@
+{
+    "sourceFile": "admin/index.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1762711631054,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1762711631054,
+            "name": "Commit-0",
+            "content": "<?php\nsession_start();\ninclude('../includes/config.php');\n\nif (isset($_POST['login'])) {\n    $uname = trim($_POST['username']);\n    $password = md5($_POST['password']);\n\n    $sql = \"SELECT id FROM admin WHERE UserName=:uname AND Password=:password LIMIT 1\";\n    $q = $dbh->prepare($sql);\n    $q->bindParam(':uname', $uname, PDO::PARAM_STR);\n    $q->bindParam(':password', $password, PDO::PARAM_STR);\n    $q->execute();\n\n    if ($q->rowCount() > 0) {\n        $_SESSION['alogin'] = $uname;\n        header('Location: dashboard.php');\n        exit();\n    } else {\n        $error = \"❌ Invalid username or password\";\n    }\n}\n?>\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Admin Login | OLMS</title>\n<style>\n  *{box-sizing:border-box;margin:0;padding:0;font-family:\"Segoe UI\",Arial,sans-serif}\n  body{\n    min-height:100vh;\n    background:linear-gradient(135deg,#00695c,#004d40);\n    display:flex;\n    align-items:center;\n    justify-content:center;\n  }\n  .card{\n    width:100%;\n    max-width:380px;\n    background:#fff;\n    border-radius:12px;\n    padding:36px 32px;\n    box-shadow:0 10px 25px rgba(0,0,0,.18);\n    text-align:center;\n    animation:fadeIn .6s ease;\n  }\n  @keyframes fadeIn{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}\n  h2{color:#004d40;margin-bottom:6px}\n  p.sub{color:#666;margin-bottom:22px;font-size:14px}\n  input{\n    width:100%;padding:12px 14px;margin:8px 0 12px;\n    border:1px solid #cfd8dc;border-radius:8px;outline:none;transition:.25s;\n  }\n  input:focus{border-color:#00796b;box-shadow:0 0 0 3px rgba(0,121,107,.12)}\n  button{\n    width:100%;padding:12px;border:none;border-radius:8px;\n    background:#00796b;color:#fff;font-weight:600;cursor:pointer;transition:.25s\n  }\n  button:hover{background:#00695c}\n  .error{\n    background:#ffebee;color:#b71c1c;border-radius:8px;padding:10px;margin-bottom:12px;font-size:14px\n  }\n  footer{\n    position:fixed;bottom:12px;width:100%;text-align:center;color:#fff;opacity:.9;font-size:13px\n  }\n</style>\n</head>\n<body>\n  <div class=\"card\">\n    <h2>OLMS Admin Login</h2>\n    <p class=\"sub\">Sign in to manage leaves & employees</p>\n\n    <?php if (!empty($error)) echo \"<div class='error'>$error</div>\"; ?>\n\n    <form method=\"post\" autocomplete=\"off\">\n      <input type=\"text\" name=\"username\" placeholder=\"Username\" required>\n      <input type=\"password\" name=\"password\" placeholder=\"Password\" required>\n      <button type=\"submit\" name=\"login\">Login</button>\n    </form>\n  </div>\n\n  <footer>© <?php echo date('Y'); ?> Online Leave Management System</footer>\n</body>\n</html>\n"
+        }
+    ]
+}

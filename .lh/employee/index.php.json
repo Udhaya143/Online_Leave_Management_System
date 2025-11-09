@@ -1,0 +1,18 @@
+{
+    "sourceFile": "employee/index.php",
+    "activeCommit": 0,
+    "commits": [
+        {
+            "activePatchIndex": 0,
+            "patches": [
+                {
+                    "date": 1762711199153,
+                    "content": "Index: \n===================================================================\n--- \n+++ \n"
+                }
+            ],
+            "date": 1762711199153,
+            "name": "Commit-0",
+            "content": "<?php\nsession_start();\ninclude('../includes/config.php');\nif(isset($_POST['login'])){\n    $email = trim($_POST['email']);\n    $password = md5($_POST['password']);\n    $sql =\"SELECT * FROM tblemployees WHERE Email=:email AND Password=:password\";\n    $query = $dbh->prepare($sql);\n    $query->bindParam(':email',$email,PDO::PARAM_STR);\n    $query->bindParam(':password',$password,PDO::PARAM_STR);\n    $query->execute();\n    $result = $query->fetch(PDO::FETCH_ASSOC);\n    if($result){\n        $_SESSION['emplogin'] = $result['Email'];\n        $_SESSION['eid'] = $result['id'];\n        header(\"Location: dashboard.php\");\n        exit;\n    } else {\n        $error = \"❌ Invalid email or password\";\n    }\n}\n?>\n<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n<meta charset=\"UTF-8\">\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n<title>Employee Login | OLMS</title>\n<style>\n    *{margin:0;padding:0;box-sizing:border-box;font-family:\"Segoe UI\",sans-serif;}\n    body{\n        background:linear-gradient(135deg,#00695c,#004d40);\n        height:100vh;\n        display:flex;\n        justify-content:center;\n        align-items:center;\n    }\n    .login-container{\n        background:#fff;\n        padding:40px 35px;\n        border-radius:12px;\n        width:100%;\n        max-width:380px;\n        box-shadow:0 10px 25px rgba(0,0,0,0.2);\n        text-align:center;\n        animation:fadeIn 0.8s ease;\n    }\n    @keyframes fadeIn{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}\n    h2{color:#004d40;margin-bottom:8px;}\n    p.sub{color:#777;margin-bottom:25px;font-size:14px;}\n    input{\n        width:100%;\n        padding:12px;\n        margin:10px 0;\n        border:1px solid #ccc;\n        border-radius:6px;\n        outline:none;\n        transition:0.3s;\n    }\n    input:focus{border-color:#00796b;box-shadow:0 0 5px rgba(0,121,107,0.3);}\n    button{\n        width:100%;\n        background:#00796b;\n        color:#fff;\n        padding:12px;\n        border:none;\n        border-radius:6px;\n        font-size:16px;\n        cursor:pointer;\n        transition:0.3s;\n        margin-top:10px;\n    }\n    button:hover{background:#00695c;}\n    .error{\n        background:#ffebee;\n        color:#b71c1c;\n        padding:10px;\n        border-radius:8px;\n        margin-bottom:15px;\n    }\n    footer{\n        text-align:center;\n        position:fixed;\n        bottom:12px;\n        width:100%;\n        color:#fff;\n        font-size:13px;\n        opacity:0.9;\n    }\n</style>\n</head>\n<body>\n    <div class=\"login-container\">\n        <h2>Employee Login</h2>\n        <p class=\"sub\">Online Leave Management System</p>\n        <?php if(isset($error)) echo \"<div class='error'>$error</div>\"; ?>\n        <form method=\"POST\">\n            <input type=\"email\" name=\"email\" placeholder=\"Enter Email\" required>\n            <input type=\"password\" name=\"password\" placeholder=\"Enter Password\" required>\n            <button type=\"submit\" name=\"login\">Login</button>\n        </form>\n    </div>\n    <footer>© <?php echo date(\"Y\"); ?> Online Leave Management System</footer>\n</body>\n</html>\n"
+        }
+    ]
+}
